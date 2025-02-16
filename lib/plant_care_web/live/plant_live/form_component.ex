@@ -19,7 +19,7 @@ defmodule PlantCareWeb.PlantLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-
+        <.input field={@form[:name]} type="text" label="Name" />
         <:actions>
           <.button phx-disable-with="Saving...">Save Plant</.button>
         </:actions>
@@ -34,13 +34,15 @@ defmodule PlantCareWeb.PlantLive.FormComponent do
      socket
      |> assign(assigns)
      |> assign_new(:form, fn ->
-       to_form(Plants.change_plant(plant))
+       to_form(Ecto.Changeset.change(plant))
      end)}
   end
 
   @impl true
-  def handle_event("validate", %{"plant" => plant_params}, socket) do
-    changeset = Plants.change_plant(socket.assigns.plant, plant_params)
+  def handle_event("validate", x, socket) do
+    %{"plant" => plant_params} = x
+    # TODO Why do i get the _unused_ fields from Phoenix.Component.used_input here? 
+    changeset = Ecto.Changeset.cast(socket.assigns.plant, plant_params,[:name])
     {:noreply, assign(socket, form: to_form(changeset, action: :validate))}
   end
 

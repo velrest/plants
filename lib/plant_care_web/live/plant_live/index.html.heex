@@ -12,6 +12,7 @@
   rows={@streams.plants}
   row_click={fn {_id, plant} -> JS.navigate(~p"/plants/#{plant}") end}
 >
+  <:col :let={{_id, plant}} label="Name">{plant.name}</:col>
   <:action :let={{_id, plant}}>
     <div class="sr-only">
       <.link navigate={~p"/plants/#{plant}"}>Show</.link>

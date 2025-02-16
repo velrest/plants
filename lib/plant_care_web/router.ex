@@ -41,8 +41,13 @@ defmodule PlantCareWeb.Router do
   scope "/", PlantCareWeb do
     pipe_through :browser
 
-    # get "/", PageController, :home
-    live "/", PlantLive.Index
+    get "/", PageController, :home
+    live "/plants", PlantLive.Index, :index
+    live "/plants/new", PlantLive.Index, :new
+    live "/plants/:id/edit", PlantLive.Index, :edit
+
+    live "/plants/:id", PlantLive.Show, :show
+    live "/plants/:id/show/edit", PlantLive.Show, :edit
     auth_routes AuthController, PlantCare.Accounts.User, path: "/auth"
     sign_out_route AuthController
 
@@ -58,7 +63,10 @@ defmodule PlantCareWeb.Router do
 
     # Remove this if you do not want to use the reset password feature
     reset_route auth_routes_prefix: "/auth",
-                overrides: [PlantCareWeb.AuthOverrides, AshAuthentication.Phoenix.Overrides.Default]
+                overrides: [
+                  PlantCareWeb.AuthOverrides,
+                  AshAuthentication.Phoenix.Overrides.Default
+                ]
   end
 
   # Other scopes may use custom stacks.

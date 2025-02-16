@@ -17,4 +17,18 @@ defmodule PlantCare.PlantsFixtures do
 
     plant
   end
+
+  @doc """
+  Generate a plant.
+  """
+  def plant_fixture(attrs \\ %{}) do
+    {:ok, plant} =
+      attrs
+      |> Enum.into(%{
+        name: "some name"
+      })
+      |> PlantCare.Plants.create_plant()
+
+    plant
+  end
 end

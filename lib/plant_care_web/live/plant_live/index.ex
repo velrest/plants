@@ -6,9 +6,7 @@ defmodule PlantCareWeb.PlantLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, plants} = Plants.read_plants()
-    IO.inspect(plants)
-    {:ok, stream(socket, :plants, plants)}
+    {:ok, stream(socket, :plants, Plants.read_plants!())}
   end
 
   @impl true
@@ -17,13 +15,9 @@ defmodule PlantCareWeb.PlantLive.Index do
   end
 
   defp apply_action(socket, :edit, %{"id" => id}) do
-    {:ok, plant} = Plants.get_plant(id)
     socket
     |> assign(:page_title, "Edit Plant")
-    |> assign(:plant, plant)
-  end
-  defp apply_action(socket, _, _) do
-    socket
+    |> assign(:plant, Plants.get_plant!(id))
   end
 
   defp apply_action(socket, :new, _params) do
@@ -45,8 +39,8 @@ defmodule PlantCareWeb.PlantLive.Index do
 
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do
-    {:ok, plant} = Plants.get_plant(id)
-    {:ok, _} = Plants.destroy_plant(plant)
+    plant = Plants.get_plant!(id)
+    :ok = Plants.destroy_plant(plant)
 
     {:noreply, stream_delete(socket, :plants, plant)}
   end

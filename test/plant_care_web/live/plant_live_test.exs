@@ -4,9 +4,9 @@ defmodule PlantCareWeb.PlantLiveTest do
   import Phoenix.LiveViewTest
   import PlantCare.PlantsFixtures
 
-  @create_attrs %{}
-  @update_attrs %{}
-  @invalid_attrs %{}
+  @create_attrs %{name: "some name"}
+  @update_attrs %{name: "some updated name"}
+  @invalid_attrs %{name: nil}
 
   defp create_plant(_) do
     plant = plant_fixture()
@@ -16,10 +16,11 @@ defmodule PlantCareWeb.PlantLiveTest do
   describe "Index" do
     setup [:create_plant]
 
-    test "lists all plants", %{conn: conn} do
+    test "lists all plants", %{conn: conn, plant: plant} do
       {:ok, _index_live, html} = live(conn, ~p"/plants")
 
       assert html =~ "Listing Plants"
+      assert html =~ plant.name
     end
 
     test "saves new plant", %{conn: conn} do
@@ -42,6 +43,7 @@ defmodule PlantCareWeb.PlantLiveTest do
 
       html = render(index_live)
       assert html =~ "Plant created successfully"
+      assert html =~ "some name"
     end
 
     test "updates plant in listing", %{conn: conn, plant: plant} do
@@ -64,6 +66,7 @@ defmodule PlantCareWeb.PlantLiveTest do
 
       html = render(index_live)
       assert html =~ "Plant updated successfully"
+      assert html =~ "some updated name"
     end
 
     test "deletes plant in listing", %{conn: conn, plant: plant} do
@@ -81,6 +84,7 @@ defmodule PlantCareWeb.PlantLiveTest do
       {:ok, _show_live, html} = live(conn, ~p"/plants/#{plant}")
 
       assert html =~ "Show Plant"
+      assert html =~ plant.name
     end
 
     test "updates plant within modal", %{conn: conn, plant: plant} do
@@ -103,6 +107,7 @@ defmodule PlantCareWeb.PlantLiveTest do
 
       html = render(show_live)
       assert html =~ "Plant updated successfully"
+      assert html =~ "some updated name"
     end
   end
 end
