@@ -10,7 +10,7 @@ defmodule PlantCare.Plants.Event do
   end
 
   actions do
-    defaults [:create, :read, :update, :destory]
+    defaults [:create, :read, :update, :destroy]
     default_accept [:type]
   end
 

@@ -7,15 +7,15 @@ defmodule PlantCare.Plants do
       define :read_plants, action: :read
       define :create_plant, action: :create
       define :get_plant, action: :read, get_by: :id
-      define :update, action: :update
-      define :destroy, action: :destroy
+      define :update_plant, action: :update
+      define :destroy_plant, action: :destroy
     end
 
     resource PlantCare.Plants.Event do
       define :read_events, action: :read
       define :create_event, action: :create
-      define :update, action: :update
-      define :destroy, action: :destroy
+      define :update_event, action: :update
+      define :destroy_event, action: :destroy
     end
   end
 end
