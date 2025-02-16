@@ -41,7 +41,8 @@ defmodule PlantCareWeb.Router do
   scope "/", PlantCareWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    # get "/", PageController, :home
+    live "/", PlantLive.Index
     auth_routes AuthController, PlantCare.Accounts.User, path: "/auth"
     sign_out_route AuthController
 
