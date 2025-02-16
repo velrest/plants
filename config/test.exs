@@ -1,5 +1,5 @@
 import Config
-config :plants, token_signing_secret: "3g5G/yCwBvpCvQVGJ1jx6pEh+lmhSxXM"
+config :plant_care, token_signing_secret: "3g5G/yCwBvpCvQVGJ1jx6pEh+lmhSxXM"
 config :ash, disable_async?: true
 
 # Configure your database
@@ -7,7 +7,7 @@ config :ash, disable_async?: true
 # The MIX_TEST_PARTITION environment variable can be used
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
-config :plants, Plants.Repo,
+config :plant_care, PlantCare.Repo,
   username: "postgres",
   password: "postgres",
   hostname: "localhost",
@@ -17,13 +17,13 @@ config :plants, Plants.Repo,
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
-config :plants, PlantsWeb.Endpoint,
+config :plant_care, PlantCareWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
   secret_key_base: "RVU78Bq/PzoAgqKHxdlyM+bAdpCZxzeyPVxGXKbHwzZqRayIinJMQyQXnHVW/Sgv",
   server: false
 
 # In test we don't send emails
-config :plants, Plants.Mailer, adapter: Swoosh.Adapters.Test
+config :plant_care, PlantCare.Mailer, adapter: Swoosh.Adapters.Test
 
 # Disable swoosh api client as it is only required for production adapters
 config :swoosh, :api_client, false

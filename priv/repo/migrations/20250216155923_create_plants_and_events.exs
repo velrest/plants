@@ -1,4 +1,4 @@
-defmodule Plants.Repo.Migrations.CreatePlantsAndEvents do
+defmodule PlantCare.Repo.Migrations.CreatePlantsAndEvents do
   @moduledoc """
   Updates resources based on their most recent snapshots.
 

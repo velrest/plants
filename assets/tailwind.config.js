@@ -9,8 +9,8 @@ module.exports = {
   content: [
     "../deps/ash_authentication_phoenix/**/*.*ex",
     "./js/**/*.js",
-    "../lib/plants_web.ex",
-    "../lib/plants_web/**/*.*ex"
+    "../lib/plant_care_web.ex",
+    "../lib/plant_care_web/**/*.*ex"
   ],
   theme: {
     extend: {

@@ -2,23 +2,13 @@
   "attributes": [
     {
       "allow_nil?": false,
-      "default": "fragment(\"(now() AT TIME ZONE 'utc')\")",
-      "generated?": false,
-      "primary_key?": false,
-      "references": null,
-      "size": null,
-      "source": "created_at",
-      "type": "utc_datetime_usec"
-    },
-    {
-      "allow_nil?": false,
-      "default": "nil",
+      "default": "fragment(\"gen_random_uuid()\")",
       "generated?": false,
       "primary_key?": true,
       "references": null,
       "size": null,
-      "source": "jti",
-      "type": "text"
+      "source": "id",
+      "type": "uuid"
     },
     {
       "allow_nil?": false,
@@ -27,38 +17,8 @@
       "primary_key?": false,
       "references": null,
       "size": null,
-      "source": "subject",
+      "source": "name",
       "type": "text"
-    },
-    {
-      "allow_nil?": false,
-      "default": "nil",
-      "generated?": false,
-      "primary_key?": false,
-      "references": null,
-      "size": null,
-      "source": "expires_at",
-      "type": "utc_datetime"
-    },
-    {
-      "allow_nil?": false,
-      "default": "nil",
-      "generated?": false,
-      "primary_key?": false,
-      "references": null,
-      "size": null,
-      "source": "purpose",
-      "type": "text"
-    },
-    {
-      "allow_nil?": true,
-      "default": "nil",
-      "generated?": false,
-      "primary_key?": false,
-      "references": null,
-      "size": null,
-      "source": "extra_data",
-      "type": "map"
     },
     {
       "allow_nil?": false,
@@ -85,8 +45,8 @@
   "check_constraints": [],
   "custom_indexes": [],
   "custom_statements": [],
-  "has_create_action": true,
-  "hash": "944AEDA4411136B27B79713BA6DF7CF5C512392B65767DBB1BFE865421518E2F",
+  "has_create_action": false,
+  "hash": "C195C68C52DEBE72BC529F41C2E565DD831E10C552864E0A20A16DDA36AFA886",
   "identities": [],
   "multitenancy": {
     "attribute": null,
@@ -95,5 +55,5 @@
   },
   "repo": "Elixir.PlantCare.Repo",
   "schema": null,
-  "table": "tokens"
+  "table": "plants"
 }

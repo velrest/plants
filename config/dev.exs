@@ -1,7 +1,7 @@
 import Config
 
 # Configure your database
-config :plants, Plants.Repo,
+config :plant_care, PlantCare.Repo,
   username: "postgres",
   password: "postgres",
   hostname: "localhost",
@@ -17,7 +17,7 @@ config :plants, Plants.Repo,
 # watchers to your application. For example, we can use it
 # to bundle .js and .css sources.
 # Binding to loopback ipv4 address prevents access from other machines.
-config :plants, PlantsWeb.Endpoint,
+config :plant_care, PlantCareWeb.Endpoint,
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   http: [ip: {127, 0, 0, 1}, port: 4000],
   check_origin: false,
@@ -25,8 +25,8 @@ config :plants, PlantsWeb.Endpoint,
   debug_errors: true,
   secret_key_base: "0sJFHAMc9gb2sosi9ykvBNbQCNmGZQVdBpQ6QmHOfK01QASJ6tJ8D7SfkZqUoT2H",
   watchers: [
-    esbuild: {Esbuild, :install_and_run, [:plants, ~w(--sourcemap=inline --watch)]},
-    tailwind: {Tailwind, :install_and_run, [:plants, ~w(--watch)]}
+    esbuild: {Esbuild, :install_and_run, [:plant_care, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:plant_care, ~w(--watch)]}
   ]
 
 # ## SSL Support
@@ -53,17 +53,17 @@ config :plants, PlantsWeb.Endpoint,
 # different ports.
 
 # Watch static and templates for browser reloading.
-config :plants, PlantsWeb.Endpoint,
+config :plant_care, PlantCareWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/plants_web/(controllers|live|components)/.*(ex|heex)$"
+      ~r"lib/plant_care_web/(controllers|live|components)/.*(ex|heex)$"
     ]
   ]
 
 # Enable dev routes for dashboard and mailbox
-config :plants, dev_routes: true, token_signing_secret: "qDrrH6iwUnRhFj2l5ppolTtWJXTEH72T"
+config :plant_care, dev_routes: true, token_signing_secret: "qDrrH6iwUnRhFj2l5ppolTtWJXTEH72T"
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"

@@ -1,4 +1,4 @@
-# Plants
+# PlantCare
 
 To start your Phoenix server:
 

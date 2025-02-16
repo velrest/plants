@@ -1,9 +1,9 @@
-defmodule Plants.MixProject do
+defmodule PlantCare.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :plants,
+      app: :plant_care,
       version: "0.1.0",
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -19,7 +19,7 @@ defmodule Plants.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Plants.Application, []},
+      mod: {PlantCare.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -85,10 +85,10 @@ defmodule Plants.MixProject do
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ash.setup --quiet", "test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.build": ["tailwind plants", "esbuild plants"],
+      "assets.build": ["tailwind plant_care", "esbuild plant_care"],
       "assets.deploy": [
-        "tailwind plants --minify",
-        "esbuild plants --minify",
+        "tailwind plant_care --minify",
+        "esbuild plant_care --minify",
         "phx.digest"
       ],
       "phx.routes": ["phx.routes", "ash_authentication.phoenix.routes"]

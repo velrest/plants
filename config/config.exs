@@ -44,20 +44,20 @@ config :spark,
     ]
   ]
 
-config :plants,
-  ecto_repos: [Plants.Repo],
+config :plant_care,
+  ecto_repos: [PlantCare.Repo],
   generators: [timestamp_type: :utc_datetime],
-  ash_domains: [Plants.Plants, Plants.Accounts]
+  ash_domains: [PlantCare.Plants, PlantCare.Accounts]
 
 # Configures the endpoint
-config :plants, PlantsWeb.Endpoint,
+config :plant_care, PlantCareWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
-    formats: [html: PlantsWeb.ErrorHTML, json: PlantsWeb.ErrorJSON],
+    formats: [html: PlantCareWeb.ErrorHTML, json: PlantCareWeb.ErrorJSON],
     layout: false
   ],
-  pubsub_server: Plants.PubSub,
+  pubsub_server: PlantCare.PubSub,
   live_view: [signing_salt: "NP/dk/Xp"]
 
 # Configures the mailer
@@ -67,12 +67,12 @@ config :plants, PlantsWeb.Endpoint,
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :plants, Plants.Mailer, adapter: Swoosh.Adapters.Local
+config :plant_care, PlantCare.Mailer, adapter: Swoosh.Adapters.Local
 
 # Configure esbuild (the version is required)
 config :esbuild,
   version: "0.17.11",
-  plants: [
+  plant_care: [
     args:
       ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
     cd: Path.expand("../assets", __DIR__),
@@ -82,7 +82,7 @@ config :esbuild,
 # Configure tailwind (the version is required)
 config :tailwind,
   version: "3.4.3",
-  plants: [
+  plant_care: [
     args: ~w(
       --config=tailwind.config.js
       --input=css/app.css

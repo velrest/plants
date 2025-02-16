@@ -53,7 +53,7 @@
     "global": null,
     "strategy": null
   },
-  "repo": "Elixir.Plants.Repo",
+  "repo": "Elixir.PlantCare.Repo",
   "schema": null,
   "table": "events"
 }
