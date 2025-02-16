@@ -47,7 +47,7 @@ config :spark,
 config :plants,
   ecto_repos: [Plants.Repo],
   generators: [timestamp_type: :utc_datetime],
-  ash_domains: [Plants.Accounts]
+  ash_domains: [Plants.Plants, Plants.Accounts]
 
 # Configures the endpoint
 config :plants, PlantsWeb.Endpoint,
