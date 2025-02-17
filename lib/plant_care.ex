@@ -1,4 +1,4 @@
-defmodule Plants do
+defmodule PlantCare do
   @moduledoc """
   Plants keeps the contexts that define your domain
   and business logic.
