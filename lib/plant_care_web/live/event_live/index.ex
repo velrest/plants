@@ -18,6 +18,7 @@ defmodule PlantCareWeb.EventLive.Index do
       rows={@streams.events}
       row_click={fn {_id, event} -> JS.navigate(~p"/events/#{event}") end}
     >
+      <:col :let={{_id, event}} label="Date">{Calendar.strftime(event.date, "%d.%m.%y")}</:col>
       <:col :let={{_id, event}} label="Event">{event.type}</:col>
 
       <:action :let={{_id, event}}>

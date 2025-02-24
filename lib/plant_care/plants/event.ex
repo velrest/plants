@@ -23,6 +23,7 @@ defmodule PlantCare.Plants.Event do
     end
 
     attribute :date, :datetime do
+      default &DateTime.utc_now/0
       allow_nil? false
     end
 
