@@ -1,8 +1,6 @@
 defmodule PlantCareWeb.PlantLive.FormComponent do
   use PlantCareWeb, :live_component
 
-  alias PlantCare.Plants
-
   @impl true
   def render(assigns) do
     ~H"""
@@ -20,6 +18,7 @@ defmodule PlantCareWeb.PlantLive.FormComponent do
         phx-submit="save"
       >
         <.input field={@form[:name]} type="text" label="Name" />
+
         <:actions>
           <.button phx-disable-with="Saving...">Save Plant</.button>
         </:actions>
@@ -29,56 +28,51 @@ defmodule PlantCareWeb.PlantLive.FormComponent do
   end
 
   @impl true
-  def update(%{plant: plant} = assigns, socket) do
+  def update(assigns, socket) do
     {:ok,
      socket
      |> assign(assigns)
-     |> assign_new(:form, fn ->
-       to_form(Ecto.Changeset.change(plant))
-     end)}
+     |> assign_form()}
   end
 
   @impl true
-  def handle_event("validate", x, socket) do
-    %{"plant" => plant_params} = x
-    # TODO Why do i get the _unused_ fields from Phoenix.Component.used_input here? 
-    changeset = Ecto.Changeset.cast(socket.assigns.plant, plant_params,[:name])
-    {:noreply, assign(socket, form: to_form(changeset, action: :validate))}
+  def handle_event("validate", %{"plant" => plant_params}, socket) do
+    {:noreply, assign(socket, form: AshPhoenix.Form.validate(socket.assigns.form, plant_params))}
   end
 
   def handle_event("save", %{"plant" => plant_params}, socket) do
-    save_plant(socket, socket.assigns.action, plant_params)
-  end
-
-  defp save_plant(socket, :edit, plant_params) do
-    case Plants.update_plant(socket.assigns.plant, plant_params) do
+    case AshPhoenix.Form.submit(socket.assigns.form, params: plant_params) do
       {:ok, plant} ->
         notify_parent({:saved, plant})
 
-        {:noreply,
-         socket
-         |> put_flash(:info, "Plant updated successfully")
-         |> push_patch(to: socket.assigns.patch)}
+        socket =
+          socket
+          |> put_flash(:info, "Plant #{socket.assigns.form.source.type}d successfully")
+          |> push_patch(to: socket.assigns.patch)
 
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign(socket, form: to_form(changeset))}
-    end
-  end
+        {:noreply, socket}
 
-  defp save_plant(socket, :new, plant_params) do
-    case Plants.create_plant(plant_params) do
-      {:ok, plant} ->
-        notify_parent({:saved, plant})
-
-        {:noreply,
-         socket
-         |> put_flash(:info, "Plant created successfully")
-         |> push_patch(to: socket.assigns.patch)}
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign(socket, form: to_form(changeset))}
+      {:error, form} ->
+        {:noreply, assign(socket, form: form)}
     end
   end
 
   defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
+
+  defp assign_form(%{assigns: %{plant: plant}} = socket) do
+    form =
+      if plant do
+        AshPhoenix.Form.for_update(plant, :update,
+          as: "plant",
+          actor: socket.assigns.current_user
+        )
+      else
+        AshPhoenix.Form.for_create(PlantCare.Plants.Plant, :create,
+          as: "plant",
+          actor: socket.assigns.current_user
+        )
+      end
+
+    assign(socket, form: to_form(form))
+  end
 end

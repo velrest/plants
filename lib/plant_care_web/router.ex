@@ -40,7 +40,6 @@ defmodule PlantCareWeb.Router do
 
   scope "/", PlantCareWeb do
     pipe_through :browser
-
     get "/", PageController, :home
     live "/plants", PlantLive.Index, :index
     live "/plants/new", PlantLive.Index, :new
@@ -48,6 +47,14 @@ defmodule PlantCareWeb.Router do
 
     live "/plants/:id", PlantLive.Show, :show
     live "/plants/:id/show/edit", PlantLive.Show, :edit
+
+    live "/events", EventLive.Index, :index
+    live "/events/new", EventLive.Index, :new
+    live "/events/:id/edit", EventLive.Index, :edit
+
+    live "/events/:id", EventLive.Show, :show
+    live "/events/:id/show/edit", EventLive.Show, :edit
+
     auth_routes AuthController, PlantCare.Accounts.User, path: "/auth"
     sign_out_route AuthController
 

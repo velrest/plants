@@ -11,7 +11,7 @@ defmodule PlantCare.Plants.Event do
 
   actions do
     defaults [:create, :read, :update, :destroy]
-    default_accept [:type]
+    default_accept [:type, :date]
   end
 
   attributes do
@@ -20,6 +20,10 @@ defmodule PlantCare.Plants.Event do
     attribute :type, :atom do
       allow_nil? false
       constraints one_of: [:water, :checkup]
+    end
+
+    attribute :date, :datetime do
+      allow_nil? false
     end
 
     create_timestamp :inserted_at
