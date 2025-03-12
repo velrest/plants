@@ -10,9 +10,19 @@ defmodule PlantCare.Plants.Event do
   end
 
   actions do
-    defaults [:create, :read, :update, :destroy]
+    defaults [:read, :update, :destroy]
     default_accept [:type, :date]
+
+    create :create do
+      accept [:type, :date]
+      argument :plant, :map do
+        allow_nil? true
+      end
+
+      change manage_relationship(:plant, type: :append)
+    end
   end
+
 
   attributes do
     uuid_primary_key :id

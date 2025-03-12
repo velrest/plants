@@ -24,18 +24,16 @@ defmodule PlantCareWeb.PlantLive.Show do
     <.list>
       <:item title="Events">
         <ul :for={event <- @plant.events} :if={not Enum.empty?(@plant.events)}>
-          <li>{event.type}</li>
+          <li>{event.type} - {date_to_string(event.date)}</li>
         </ul>
 
         <span :if={Enum.empty?(@plant.events)}>Empty...</span>
 
-        {@plant.events}
-
-        <.link patch={~p"/plants/#{@plant}/show/add_event"} phx-click={JS.push_focus()}>
-          <.button>Add a new event</.button>
-        </.link>
       </:item>
     </.list>
+    <.link patch={~p"/plants/#{@plant}/show/add_event"} phx-click={JS.push_focus()}>
+      <.button>Add a new event</.button>
+    </.link>
 
     <.back navigate={~p"/plants"}>Back to plants</.back>
 
@@ -55,6 +53,7 @@ defmodule PlantCareWeb.PlantLive.Show do
         patch={~p"/plants/#{@plant}"}
       />
     </.modal>
+
     <.modal
       :if={@live_action == :add_event}
       id="event-modal"
@@ -82,16 +81,20 @@ defmodule PlantCareWeb.PlantLive.Show do
 
   @impl true
   def handle_params(%{"id" => id}, _, socket) do
+    plant = PlantCare.Plants.get_plant!(id, load: :events, actor: socket.assigns.current_user)
+    IO.inspect(plant)
+
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(
-       :plant,
-       Ash.get!(PlantCare.Plants.Plant, id, load: :events, actor: socket.assigns.current_user)
-     )}
+     |> assign(:plant, plant)}
   end
 
   defp page_title(:show), do: "Show Plant"
   defp page_title(:edit), do: "Edit Plant"
   defp page_title(:add_event), do: "Add event to plant"
+
+  defp date_to_string(date) do
+    "#{date.day}.#{date.month}.#{date.year}"
+  end
 end

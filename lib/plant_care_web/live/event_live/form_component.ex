@@ -1,5 +1,4 @@
 defmodule PlantCareWeb.EventLive.FormComponent do
-alias Ash.Changeset
   use PlantCareWeb, :live_component
 
   @impl true
@@ -25,11 +24,7 @@ alias Ash.Changeset
           options={Ash.Resource.Info.attribute(PlantCare.Plants.Event, :type).constraints[:one_of]}
         />
 
-        <.input
-          field={@form[:date]}
-          type="date"
-          label="Date"
-        />
+        <.input field={@form[:date]} type="date" label="Date" />
 
         <:actions>
           <.button phx-disable-with="Saving...">Save Event</.button>
@@ -82,7 +77,7 @@ alias Ash.Changeset
         AshPhoenix.Form.for_create(PlantCare.Plants.Event, :create,
           as: "event",
           actor: socket.assigns.current_user,
-          prepare_source: &Changeset.change_attribute(&, :plant, plant)
+          prepare_source: & Ash.Changeset.set_arguments(&1, %{plant: plant})
         )
       end
 
