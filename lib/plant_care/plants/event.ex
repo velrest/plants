@@ -30,4 +30,8 @@ defmodule PlantCare.Plants.Event do
     create_timestamp :inserted_at
     update_timestamp :updated_at
   end
+
+  relationships do
+    belongs_to :plant, PlantCare.Plants.Plant
+  end
 end

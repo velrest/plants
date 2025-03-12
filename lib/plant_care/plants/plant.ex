@@ -24,4 +24,8 @@ defmodule PlantCare.Plants.Plant do
     create_timestamp :inserted_at
     update_timestamp :updated_at
   end
+
+  relationships do
+    has_many :events, PlantCare.Plants.Event
+  end
 end

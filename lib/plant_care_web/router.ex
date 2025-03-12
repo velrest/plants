@@ -25,6 +25,20 @@ defmodule PlantCareWeb.Router do
     pipe_through :browser
 
     ash_authentication_live_session :authenticated_routes do
+      live "/plants", PlantLive.Index, :index
+      live "/plants/new", PlantLive.Index, :new
+      live "/plants/:id/edit", PlantLive.Index, :edit
+
+      live "/plants/:id", PlantLive.Show, :show
+      live "/plants/:id/show/edit", PlantLive.Show, :edit
+      live "/plants/:id/show/add_event", PlantLive.Show, :add_event
+
+      live "/events", EventLive.Index, :index
+      live "/events/new", EventLive.Index, :new
+      live "/events/:id/edit", EventLive.Index, :edit
+
+      live "/events/:id", EventLive.Show, :show
+      live "/events/:id/show/edit", EventLive.Show, :edit
       # in each liveview, add one of the following at the top of the module:
       #
       # If an authenticated user must be present:
@@ -40,20 +54,8 @@ defmodule PlantCareWeb.Router do
 
   scope "/", PlantCareWeb do
     pipe_through :browser
-    get "/", PageController, :home
-    live "/plants", PlantLive.Index, :index
-    live "/plants/new", PlantLive.Index, :new
-    live "/plants/:id/edit", PlantLive.Index, :edit
 
-    live "/plants/:id", PlantLive.Show, :show
-    live "/plants/:id/show/edit", PlantLive.Show, :edit
-
-    live "/events", EventLive.Index, :index
-    live "/events/new", EventLive.Index, :new
-    live "/events/:id/edit", EventLive.Index, :edit
-
-    live "/events/:id", EventLive.Show, :show
-    live "/events/:id/show/edit", EventLive.Show, :edit
+      get "/", PageController, :home
 
     auth_routes AuthController, PlantCare.Accounts.User, path: "/auth"
     sign_out_route AuthController

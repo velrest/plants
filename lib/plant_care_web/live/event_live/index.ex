@@ -1,6 +1,8 @@
 defmodule PlantCareWeb.EventLive.Index do
   use PlantCareWeb, :live_view
 
+  on_mount {PlantCareWeb.LiveUserAuth, :live_user_required}
+
   @impl true
   def render(assigns) do
     ~H"""

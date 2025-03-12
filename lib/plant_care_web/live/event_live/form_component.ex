@@ -1,4 +1,5 @@
 defmodule PlantCareWeb.EventLive.FormComponent do
+alias Ash.Changeset
   use PlantCareWeb, :live_component
 
   @impl true
@@ -70,7 +71,7 @@ defmodule PlantCareWeb.EventLive.FormComponent do
 
   defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
 
-  defp assign_form(%{assigns: %{event: event}} = socket) do
+  defp assign_form(%{assigns: %{event: event, plant: plant}} = socket) do
     form =
       if event do
         AshPhoenix.Form.for_update(event, :update,
@@ -80,7 +81,8 @@ defmodule PlantCareWeb.EventLive.FormComponent do
       else
         AshPhoenix.Form.for_create(PlantCare.Plants.Event, :create,
           as: "event",
-          actor: socket.assigns.current_user
+          actor: socket.assigns.current_user,
+          prepare_source: &Changeset.change_attribute(&, :plant, plant)
         )
       end
 
